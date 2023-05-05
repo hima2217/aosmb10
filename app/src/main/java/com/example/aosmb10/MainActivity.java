@@ -1,13 +1,14 @@
 package com.example.aosmb10;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.work.OneTimeWorkRequest;
+import androidx.work.WorkManager;
 
 import android.os.Bundle;
 import android.util.Log;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.TimeUnit;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -26,5 +27,12 @@ public class MainActivity extends AppCompatActivity {
                 action("Доктор 3");
 
             });
-        executor.shutdown();}
+        executor.shutdown();
+
+        WorkManager workManager;
+        workManager = WorkManager.getInstance(getApplicationContext());
+        workManager.enqueue(OneTimeWorkRequest.from(DocWorker.class));
+    }
+
+
     }
